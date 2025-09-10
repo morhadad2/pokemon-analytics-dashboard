@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Pokemon } from '../../types';
 import PokemonSearch from './components/PokemonSearch';
 import {
   PageHeader,
   PageTitle,
   PageSubtitle,
-} from '../../shared/components/styled';
+} from '../../shared/components/ui';
 import styled from 'styled-components';
 
 const SearchPageHeader = styled(PageHeader)`

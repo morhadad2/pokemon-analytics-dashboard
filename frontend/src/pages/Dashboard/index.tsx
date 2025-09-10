@@ -5,11 +5,11 @@ import {
   Pokemon 
 } from '../../types';
 import {
-  DashboardGrid,
   PageHeader,
   PageTitle,
   PageSubtitle,
-} from '../../shared/components/styled';
+} from '../../shared/components/ui';
+import { DashboardGrid } from './components';
 import TypeDistributionChart from './components/TypeDistributionChart';
 import EvolutionDistributionChart from './components/EvolutionDistributionChart';
 import TopPokemonChart from './components/TopPokemonChart';

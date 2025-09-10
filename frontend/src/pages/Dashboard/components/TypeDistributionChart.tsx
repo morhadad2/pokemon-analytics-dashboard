@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { TypeDistribution } from '../../../types';
-import { ChartCard, ChartTitle } from '../../../shared/components/styled';
+import { ChartCard, ChartTitle } from './';
 
 interface TypeDistributionChartProps {
   data: TypeDistribution[];

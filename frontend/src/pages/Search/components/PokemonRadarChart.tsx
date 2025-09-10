@@ -9,7 +9,7 @@ import {
   Legend,
 } from 'recharts';
 import { Pokemon } from '../../../types';
-import { ChartCard, ChartTitle } from '../../../shared/components/styled';
+import { ChartCard, ChartTitle } from '../../Dashboard/components';
 
 interface PokemonRadarChartProps {
   pokemon: Pokemon;

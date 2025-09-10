@@ -10,7 +10,7 @@ import { ThemeProvider } from './theme/ThemeProvider';
 import { 
   Container,
   ErrorMessage
-} from './shared/components/styled';
+} from './shared/components/ui';
 import PokemonHeader from './shared/components/PokemonHeader';
 import Navigation, { NavigationPage } from './shared/components/Navigation';
 import Dashboard from './pages/Dashboard';

@@ -16,7 +16,7 @@ import {
   StatCard,
   StatName,
   StatValue,
-} from '../../../shared/components/styled';
+} from '../../../shared/components/ui';
 import styled from 'styled-components';
 
 const SearchFormCard = styled(FormCard)`

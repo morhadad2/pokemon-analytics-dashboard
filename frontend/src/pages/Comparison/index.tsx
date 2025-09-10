@@ -4,7 +4,7 @@ import {
   PageHeader,
   PageTitle,
   PageSubtitle,
-} from '../../shared/components/styled';
+} from '../../shared/components/ui';
 import styled from 'styled-components';
 
 const ComparisonPageHeader = styled(PageHeader)`

@@ -15,9 +15,8 @@ import {
   FormCard,
   FormGroup,
   Label,
-  ChartCard,
-  ChartTitle,
-} from '../../../shared/components/styled';
+} from '../../../shared/components/ui';
+import { ChartCard, ChartTitle } from '../../Dashboard/components';
 
 const PokemonComparison: React.FC = () => {
   const [pokemon1, setPokemon1] = useState<Pokemon | null>(null);
