@@ -85,8 +85,8 @@ const PokemonComparison: React.FC = () => {
   };
 
   const comparisonData = getComparisonData();
-  const totalStats1 = pokemon1 ? Object.values(pokemon1.stats).reduce((sum, stat) => sum + stat, 0) : 0;
-  const totalStats2 = pokemon2 ? Object.values(pokemon2.stats).reduce((sum, stat) => sum + stat, 0) : 0;
+  const totalStats1 = pokemon1 ? Object.values(pokemon1.stats).filter(x => !isNaN(x)).reduce((sum, stat) => sum + stat, 0) : 0;
+  const totalStats2 = pokemon2 ? Object.values(pokemon2.stats).filter(x => !isNaN(x)).reduce((sum, stat) => sum + stat, 0) : 0;
 
   return (
     <FormCard>
