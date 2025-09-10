@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap');
+
+:root {
+  --hp-color: #e74c3c;
+  --attack-color: #f39c12;
+  --defense-color: #3498db;
+  --specialAttack-color: #9b59b6;
+  --specialDefense-color: #1abc9c;
+  --speed-color: #f1c40f;
+}
+
+body {
+  margin: 0;
+  font-family: 'Orbitron', 'Courier New', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+  color: #ecf0f1;
+  min-height: 100vh;
+}
+
+code {
+  font-family: 'Courier New', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+}
+
+/* Pokemon-style scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2c3e50;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  border-radius: 6px;
+  border: 2px solid #2c3e50;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+}
+
+/* Pokemon-style selection */
+::selection {
+  background: #f39c12;
+  color: #2c3e50;
+}
+
+::-moz-selection {
+  background: #f39c12;
+  color: #2c3e50;
+}
+
+/* Pokemon font classes */
+.pokemon-title {
+  font-family: 'Press Start 2P', 'Courier New', monospace !important;
+}
+
+.pokemon-text {
+  font-family: 'Orbitron', 'Courier New', monospace !important;
+}
+
+/* Pixel art styling */
+.pixel-art {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Pokemon-themed animations */
+@keyframes pokeball-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pokemon-glow {
+  0%, 100% { 
+    box-shadow: 0 0 5px #f39c12, 0 0 10px #f39c12, 0 0 15px #f39c12;
+  }
+  50% { 
+    box-shadow: 0 0 10px #f39c12, 0 0 20px #f39c12, 0 0 30px #f39c12;
+  }
+}
+
+/* Loading animation */
+@keyframes loading {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Page transition animations */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.page-enter {
+  animation: slideInFromRight 0.3s ease-out;
+}
+
+/* Mobile responsive hamburger menu */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 20px !important;
+  }
+}
+
+/* Stat color classes */
+.stat-hp { color: var(--hp-color) !important; }
+.stat-attack { color: var(--attack-color) !important; }
+.stat-defense { color: var(--defense-color) !important; }
+.stat-special-attack { color: var(--specialAttack-color) !important; }
+.stat-special-defense { color: var(--specialDefense-color) !important; }
+.stat-speed { color: var(--speed-color) !important; }
