@@ -7,8 +7,8 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
-import { EvolutionDistribution } from '../types';
-import { ChartCard, ChartTitle } from './styled';
+import { EvolutionDistribution } from '../../../types';
+import { ChartCard, ChartTitle } from '../../../shared/components/styled';
 
 interface EvolutionDistributionChartProps {
   data: EvolutionDistribution[];

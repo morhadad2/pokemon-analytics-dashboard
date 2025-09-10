@@ -8,17 +8,16 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts';
-import { Pokemon } from '../types';
-import { pokemonAPI } from '../services/api';
-import AutocompleteInput from './AutocompleteInput';
+import { Pokemon } from '../../../types';
+import { pokemonAPI } from '../../../services/api';
+import AutocompleteInput from '../../../shared/components/AutocompleteInput';
 import {
   FormCard,
-  Form,
   FormGroup,
   Label,
   ChartCard,
   ChartTitle,
-} from './styled';
+} from '../../../shared/components/styled';
 
 const PokemonComparison: React.FC = () => {
   const [pokemon1, setPokemon1] = useState<Pokemon | null>(null);

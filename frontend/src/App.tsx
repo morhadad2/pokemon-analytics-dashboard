@@ -10,9 +10,9 @@ import { ThemeProvider } from './theme/ThemeProvider';
 import { 
   Container,
   ErrorMessage
-} from './components/styled';
-import PokemonHeader from './components/PokemonHeader';
-import Navigation, { NavigationPage } from './components/Navigation';
+} from './shared/components/styled';
+import PokemonHeader from './shared/components/PokemonHeader';
+import Navigation, { NavigationPage } from './shared/components/Navigation';
 import Dashboard from './pages/Dashboard';
 import Search from './pages/Search';
 import Comparison from './pages/Comparison';

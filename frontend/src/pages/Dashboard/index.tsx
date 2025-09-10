@@ -3,16 +3,16 @@ import {
   TypeDistribution, 
   EvolutionDistribution, 
   Pokemon 
-} from '../types';
+} from '../../types';
 import {
   DashboardGrid,
   PageHeader,
   PageTitle,
   PageSubtitle,
-} from '../components/styled';
-import TypeDistributionChart from '../components/TypeDistributionChart';
-import EvolutionDistributionChart from '../components/EvolutionDistributionChart';
-import TopPokemonChart from '../components/TopPokemonChart';
+} from '../../shared/components/styled';
+import TypeDistributionChart from './components/TypeDistributionChart';
+import EvolutionDistributionChart from './components/EvolutionDistributionChart';
+import TopPokemonChart from './components/TopPokemonChart';
 import styled from 'styled-components';
 
 const DashboardPageHeader = styled(PageHeader)`

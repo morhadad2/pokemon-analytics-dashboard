@@ -1,10 +1,10 @@
 import React from 'react';
-import PokemonComparison from '../components/PokemonComparison';
+import PokemonComparison from './components/PokemonComparison';
 import {
   PageHeader,
   PageTitle,
   PageSubtitle,
-} from '../components/styled';
+} from '../../shared/components/styled';
 import styled from 'styled-components';
 
 const ComparisonPageHeader = styled(PageHeader)`

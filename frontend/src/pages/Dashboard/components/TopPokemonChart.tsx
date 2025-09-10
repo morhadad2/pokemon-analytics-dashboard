@@ -9,8 +9,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { Pokemon } from '../types';
-import { ChartCard, ChartTitle } from './styled';
+import { Pokemon } from '../../../types';
+import { ChartCard, ChartTitle } from '../../../shared/components/styled';
 
 interface TopPokemonChartProps {
   data: Pokemon[];

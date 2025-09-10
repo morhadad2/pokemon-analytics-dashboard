@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Pokemon } from '../types';
-import PokemonSearch from '../components/PokemonSearch';
+import { Pokemon } from '../../types';
+import PokemonSearch from './components/PokemonSearch';
 import {
   PageHeader,
   PageTitle,
   PageSubtitle,
-} from '../components/styled';
+} from '../../shared/components/styled';
 import styled from 'styled-components';
 
 const SearchPageHeader = styled(PageHeader)`
@@ -13,10 +13,9 @@ const SearchPageHeader = styled(PageHeader)`
 `;
 
 const Search: React.FC = () => {
-  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
-
   const handlePokemonSelected = (pokemon: Pokemon) => {
-    setSelectedPokemon(pokemon);
+    // Pokemon selection handled within PokemonSearch component
+    console.log('Pokemon selected:', pokemon.name);
   };
 
   return (

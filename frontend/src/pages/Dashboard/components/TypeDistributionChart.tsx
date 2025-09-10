@@ -9,22 +9,22 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { DataPoint } from '../types';
-import { ChartCard, ChartTitle } from './styled';
+import { TypeDistribution } from '../../../types';
+import { ChartCard, ChartTitle } from '../../../shared/components/styled';
 
-interface BarChartComponentProps {
-  data: DataPoint[];
+interface TypeDistributionChartProps {
+  data: TypeDistribution[];
 }
 
-const BarChartComponent: React.FC<BarChartComponentProps> = ({ data }) => {
+const TypeDistributionChart: React.FC<TypeDistributionChartProps> = ({ data }) => {
   return (
     <ChartCard>
-      <ChartTitle>Data Distribution</ChartTitle>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data}>
+      <ChartTitle>Pokemon Type Distribution</ChartTitle>
+      <ResponsiveContainer width="100%" height={400}>
+        <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis 
-            dataKey="label" 
+            dataKey="_id" 
             tick={{ fontSize: 12 }}
             angle={-45}
             textAnchor="end"
@@ -34,8 +34,8 @@ const BarChartComponent: React.FC<BarChartComponentProps> = ({ data }) => {
           <Tooltip />
           <Legend />
           <Bar 
-            dataKey="value" 
-            fill="#28a745"
+            dataKey="count" 
+            fill="#007bff"
             radius={[4, 4, 0, 0]}
           />
         </BarChart>
@@ -44,4 +44,4 @@ const BarChartComponent: React.FC<BarChartComponentProps> = ({ data }) => {
   );
 };
 
-export default BarChartComponent;
+export default TypeDistributionChart;

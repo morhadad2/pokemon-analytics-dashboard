@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { Pokemon } from '../types';
+import { Pokemon } from '../../types';
 
 const AutocompleteContainer = styled.div`
   position: relative;

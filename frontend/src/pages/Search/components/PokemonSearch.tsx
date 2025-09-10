@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { pokemonAPI } from '../services/api';
-import { Pokemon } from '../types';
+import { pokemonAPI } from '../../../services/api';
+import { Pokemon } from '../../../types';
 import PokemonRadarChart from './PokemonRadarChart';
-import AutocompleteInput from './AutocompleteInput';
+import AutocompleteInput from '../../../shared/components/AutocompleteInput';
 import {
   FormCard,
   Form,
@@ -16,7 +16,7 @@ import {
   StatCard,
   StatName,
   StatValue,
-} from './styled';
+} from '../../../shared/components/styled';
 import styled from 'styled-components';
 
 const SearchFormCard = styled(FormCard)`
