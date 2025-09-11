@@ -1,25 +1,19 @@
 import express from 'express';
-import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cron from 'node-cron';
 import pokemonRoutes from './routes/pokemon';
 import dashboardRoutes from './routes/dashboard';
 import { PokemonService } from './services/pokemonService';
+import { setupMiddleware } from './middleware';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Middleware
-app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-app.use(express.json());
+// Setup all middleware
+setupMiddleware(app);
 
 // MongoDB connection
 const connectDB = async () => {
@@ -39,13 +33,12 @@ app.use('/api/dashboard', dashboardRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ message: 'Server is running!' });
-});
-
-// Error handling middleware
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+  res.json({ 
+    message: 'Server is running!',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || 'development'
+  });
 });
 
 // Schedule Pokemon data fetching every hour
@@ -70,9 +63,10 @@ const startServer = async () => {
   schedulePokemonFetching();
   
   app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    console.log(`Pokemon API endpoints available at http://localhost:${PORT}/api/pokemon`);
-    console.log(`Dashboard API endpoints available at http://localhost:${PORT}/api/dashboard`);
+    console.log(`🚀 Server is running on port ${PORT}`);
+    console.log(`📊 Pokemon API endpoints available at http://localhost:${PORT}/api/pokemon`);
+    console.log(`📈 Dashboard API endpoints available at http://localhost:${PORT}/api/dashboard`);
+    console.log(`🏥 Health check available at http://localhost:${PORT}/api/health`);
   });
 };
 

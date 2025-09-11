@@ -9,7 +9,7 @@ interface PokemonAPIResponse {
   types: Array<{ type: { name: string } }>;
   height: number;
   weight: number;
-  generation: number;
+
   stats: Array<{
     base_stat: number;
     stat: { name: string };
