@@ -44,6 +44,19 @@ interface EvolutionChainResponse {
 }
 
 export class PokemonService {
+  static async getPokemonStats(): Promise<{ total: number; lastId: number; progress: string }> {
+    try {
+      const total = await Pokemon.countDocuments();
+      const lastPokemon = await Pokemon.findOne().sort({ pokemonId: -1 });
+      const lastId = lastPokemon ? lastPokemon.pokemonId : 0;
+      const progress = `${total}/1070 (${((total / 1070) * 100).toFixed(1)}%)`;
+      
+      return { total, lastId, progress };
+    } catch (error) {
+      console.error('Error getting Pokemon stats:', error);
+      throw error;
+    }
+  }
   private static async fetchPokemonData(pokemonId: number): Promise<PokemonAPIResponse> {
     try {
       const response = await axios.get(`${POKEMON_API_BASE}/pokemon/${pokemonId}`);
@@ -130,7 +143,7 @@ export class PokemonService {
     };
   }
 
-  static async fetchAndStorePokemon(pokemonId: number): Promise<IPokemon> {
+  static async fetchAndStorePokemon(pokemonId: number): Promise<IPokemon | null> {
     try {
       // Check if Pokemon already exists
       const existingPokemon = await Pokemon.findOne({ pokemonId });
@@ -159,7 +172,13 @@ export class PokemonService {
       console.log(`Successfully saved Pokemon: ${savedPokemon.name} (ID: ${savedPokemon.pokemonId})`);
       
       return savedPokemon;
-    } catch (error) {
+    } catch (error: any) {
+      // Handle 404 errors (Pokemon not found) gracefully
+      if (error.response?.status === 404) {
+        console.log(`Pokemon ${pokemonId} not found in PokeAPI, skipping...`);
+        return null;
+      }
+      
       console.error(`Error processing Pokemon ${pokemonId}:`, error);
       throw error;
     }
@@ -173,13 +192,35 @@ export class PokemonService {
       const lastPokemon = await Pokemon.findOne().sort({ pokemonId: -1 });
       const startId = lastPokemon ? lastPokemon.pokemonId + 1 : 1;
       
+      // PokeAPI has approximately 1,070 Pokemon, so we'll limit our range
+      const MAX_POKEMON_ID = 1070;
+      const endId = Math.min(startId + 50, MAX_POKEMON_ID + 1);
+      
+      if (startId > MAX_POKEMON_ID) {
+        console.log(`All Pokemon have been fetched! no data to fetch`);
+        return;
+      }
+      
       const promises = [];
-      for (let i = startId; i < startId + 50; i++) {
+      for (let i = startId; i < endId; i++) {
         promises.push(this.fetchAndStorePokemon(i));
       }
       
-      await Promise.allSettled(promises);
+      const results = await Promise.allSettled(promises);
+      
+      // Count successful and failed fetches
+      const successful = results.filter(result => result.status === 'fulfilled').length;
+      const failed = results.filter(result => result.status === 'rejected').length;
+      
       console.log(`Completed fetching Pokemon batch starting from ID ${startId}`);
+      console.log(`✅ Successfully fetched: ${successful} Pokemon`);
+      console.log(`❌ Failed to fetch: ${failed} Pokemon`);
+      
+      // If we hit the limit, log it
+      if (endId >= MAX_POKEMON_ID) {
+        console.log(`🎯 Reached PokeAPI limit (${MAX_POKEMON_ID} Pokemon).`);
+      }
+      
     } catch (error) {
       console.error('Error fetching Pokemon batch:', error);
       throw error;

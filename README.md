@@ -31,7 +31,7 @@ npm install
 3. Create a `.env` file in the backend directory:
 ```env
 PORT=5001
-MONGODB_URI=mongodb://localhost:27017/dashboard
+MONGODB_URI=ASK for more the URL for mongoAtlAs instance l
 NODE_ENV=development
 ```
 
@@ -44,12 +44,7 @@ The backend will be available at `http://localhost:5001`
 
 ### API Endpoints
 
-#### Health & Dashboard
-- `GET /api/health` - Health check
-- `GET /api/dashboard` - Get all data points (legacy)
-- `POST /api/dashboard` - Create new data point (legacy)
 
-#### Pokemon Endpoints
 - `GET /api/pokemon` - Get all Pokemon
 - `GET /api/pokemon/:id` - Get Pokemon by ID
 - `GET /api/pokemon/search?name=name` - Search Pokemon by name
@@ -90,39 +85,33 @@ The frontend will be available at `http://localhost:3000`
 ## Features
 
 ### Backend Features
-- **Pokemon API Integration**: Fetches data from pokeapi.co every hour
+- **Pokemon API Integration**: Fetches data from pokeapi.co every 10 minutes using a cron job (simulate getting new data in a live env we just add 50 pokemons using this job if u want to  also for each time the bE is starting he will fetch the next 50 pokemons, if we wannt to simulate getting new data we can change the cron job for every minute or to every 2-3 minutes in backend/src/index.ts:50)
 - **Scheduled Data Fetching**: Automatically fetches next 50 Pokemon every hour using cron jobs
-- **MongoDB Storage**: Stores Pokemon data with comprehensive schemas
-- **Evolution Detection**: Determines Pokemon evolution stages (1st, 2nd, 3rd)
-- **RESTful API**: Complete CRUD operations for Pokemon data
-- **TypeScript**: Full type safety throughout the application
-- **Error Handling**: Robust error handling and logging
 
 ### Frontend Features
-- **Pokemon Search**: Search and view individual Pokemon details
 - **Interactive Charts**: Multiple visualization types:
   - **Type Distribution Chart**: Shows how many Pokemon of each type
   - **Evolution Stage Chart**: Compares 1st, 2nd, and 3rd evolution Pokemon
-  - **Top Pokemon Charts**: Shows strongest Pokemon by HP, Attack, etc.
+  - **Top Pokemon Charts**: Shows strongest Pokemon by HP, Attack.
 - **Pokemon Details**: Complete stats, types, height, weight, evolution stage
 - **Real-time Data**: Charts update as new Pokemon are fetched
-- **Responsive Design**: Works on all devices
-- **Modern UI**: Clean, intuitive interface with Styled Components
+- **Pokemon Search**: Search and view individual Pokemon details
+- **Pokemon Comparison**: Search and compare between multiple pokemons.
+
+
 
 ## Usage
 
-1. Start MongoDB (if running locally)
-2. Start the backend server: `cd backend && npm run dev`
+1. Start the backend server: `cd backend && npm run dev`
    - The server will automatically start fetching Pokemon data
    - First batch of 50 Pokemon will be fetched immediately
-   - Every hour, the next 50 Pokemon will be fetched
+   - Every 10 minutes , the next 50 Pokemon will be fetched
 3. Start the frontend server: `cd frontend && npm start`
 4. Open `http://localhost:3000` in your browser
 5. Explore the Pokemon dashboard:
    - **Search Pokemon**: Use the search box to find specific Pokemon
    - **View Charts**: See type distribution, evolution stages, and top performers
    - **Pokemon Details**: Click on search results to see detailed stats
-   - **Real-time Updates**: Charts update as new Pokemon are fetched hourly
 
 ## Technologies Used
 
@@ -134,8 +123,6 @@ The frontend will be available at `http://localhost:3000`
 - Mongoose
 - Axios (for Pokemon API calls)
 - node-cron (for scheduled tasks)
-- CORS
-- dotenv
 
 ### Frontend
 - React
@@ -175,3 +162,30 @@ npm test       # Run tests
 
 ### Frontend (.env)
 - `REACT_APP_API_URL` - Backend API URL (default: http://localhost:5001/api)
+
+
+
+
+ ## testing 
+ currently no testing are implements  
+ my approach would be:
+ first start with unit tests
+
+- unit tests  
+   - in fe -  each compnent test  does it render, does it show chart correct when i pass data
+   -in the backend test each method by itself, no db, just logic
+   - all routs in the be with mock data so i dont hit real db, only check if response is correct shape
+
+- integration tests
+  - db + be, see that queries and models work together and no errors when data is missing or strange
+- fe + be together, so i can run a flow like user search a pokemon and check the chart updates right
+
+- end 2 end 
+ - check user flows - wh
+
+
+ ## monitorring 
+ - add logs to backend so i can trace errors and perf
+ - add a health check route so i can know if be is alive
+ - put error tracker like sentry for both fe + be so crashes are catched automatic
+ - maybe simple metrics like how many api calls per min, which pokemons searched    most, average response time

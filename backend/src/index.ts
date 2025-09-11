@@ -41,18 +41,24 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Schedule Pokemon data fetching every hour
+// Schedule Pokemon data fetching every 10 minutes
 const schedulePokemonFetching = () => {
   // Run immediately on startup
   PokemonService.fetchNext50Pokemon().catch(console.error);
   
-  // Schedule to run every hour
-  cron.schedule('0 * * * *', () => {
+  // Schedule to run every 10 minutes
+  cron.schedule('*/10 * * * *', async () => {
     console.log('Running scheduled Pokemon fetch...');
-    PokemonService.fetchNext50Pokemon().catch(console.error);
+    try {
+      const stats = await PokemonService.getPokemonStats();
+      console.log(`📊 Current Pokemon collection: ${stats.progress}`);
+      await PokemonService.fetchNext50Pokemon();
+    } catch (error) {
+      console.error('Scheduled fetch error:', error);
+    }
   });
   
-  console.log('Pokemon fetching scheduled to run every hour');
+  console.log('Pokemon fetching scheduled to run every 10 minutes');
 };
 
 // Start server
