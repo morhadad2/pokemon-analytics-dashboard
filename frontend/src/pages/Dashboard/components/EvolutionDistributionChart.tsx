@@ -7,11 +7,11 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
-import { EvolutionDistribution } from '../../../types';
+import { Distribution } from '../../../types';
 import { ChartCard, ChartTitle } from './';
 
 interface EvolutionDistributionChartProps {
-  data: EvolutionDistribution[];
+  data: Distribution[];
 }
 
 const COLORS = ['#28a745', '#ffc107', '#dc3545'];

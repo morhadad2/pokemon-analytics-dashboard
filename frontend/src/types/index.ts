@@ -1,16 +1,3 @@
-export interface DataPoint {
-  _id: string;
-  label: string;
-  value: number;
-  category: string;
-  date: string;
-}
-
-export interface CreateDataPointRequest {
-  label: string;
-  value: number;
-  category: string;
-}
 
 export interface PokemonStats {
   hp: number;
@@ -29,7 +16,7 @@ export interface Pokemon {
   height: number;
   weight: number;
   stats: PokemonStats;
-  evolutionStage: number;
+evolutionStage: number;
   isFirstEvolution: boolean;
   isSecondEvolution: boolean;
   isThirdEvolution: boolean;
@@ -37,13 +24,8 @@ export interface Pokemon {
   fetchedAt: string;
 }
 
-export interface TypeDistribution {
+export interface Distribution {
   _id: string;
-  count: number;
-}
-
-export interface EvolutionDistribution {
-  _id: number;
   count: number;
 }
 

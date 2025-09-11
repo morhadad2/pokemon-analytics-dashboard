@@ -9,6 +9,16 @@ export interface IPokemonStats extends Document {
   speed: number;
 }
 
+const PokemonStatsSchema: Schema = new Schema({
+    hp: { type: Number, required: true },
+    attack: { type: Number, required: true },
+    defense: { type: Number, required: true },
+    specialAttack: { type: Number, required: true },
+    specialDefense: { type: Number, required: true },
+    speed: { type: Number, required: true }
+  });
+
+
 export interface IPokemon extends Document {
   pokemonId: number;
   name: string;
@@ -24,14 +34,6 @@ export interface IPokemon extends Document {
   fetchedAt: Date;
 }
 
-const PokemonStatsSchema: Schema = new Schema({
-  hp: { type: Number, required: true },
-  attack: { type: Number, required: true },
-  defense: { type: Number, required: true },
-  specialAttack: { type: Number, required: true },
-  specialDefense: { type: Number, required: true },
-  speed: { type: Number, required: true }
-});
 
 const PokemonSchema: Schema = new Schema({
   pokemonId: {

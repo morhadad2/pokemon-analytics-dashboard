@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Pokemon, 
-  TypeDistribution, 
-  EvolutionDistribution, 
+  Distribution, 
   PokemonStatsSummary 
 } from './types';
 import { pokemonAPI } from './services/api';
@@ -112,8 +111,8 @@ const PollingButton = styled.button`
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<NavigationPage>('dashboard');
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
-  const [typeDistribution, setTypeDistribution] = useState<TypeDistribution[]>([]);
-  const [evolutionDistribution, setEvolutionDistribution] = useState<EvolutionDistribution[]>([]);
+  const [typeDistribution, setTypeDistribution] = useState<Distribution[]>([]);
+  const [evolutionDistribution, setEvolutionDistribution] = useState<Distribution[]>([]);
   const [topPokemonByAttack, setTopPokemonByAttack] = useState<Pokemon[]>([]);
   const [topPokemonByHp, setTopPokemonByHp] = useState<Pokemon[]>([]);
   const [topPokemonByDefense, setTopPokemonByDefense] = useState<Pokemon[]>([]);

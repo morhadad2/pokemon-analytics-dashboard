@@ -128,3 +128,15 @@ export const getTopPokemonByStat = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error fetching top Pokemon by stat' });
   }
 };
+
+export const getGenerationDistribution = async (req: Request, res: Response) => {
+  try {
+    const generationDistribution = await Pokemon.aggregate([
+      { $group: { _id: '$generation', count: { $sum: 1 } } },
+      { $sort: { _id: 1 } }
+    ]);
+    res.json(generationDistribution);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching generation distribution' });
+  }
+};

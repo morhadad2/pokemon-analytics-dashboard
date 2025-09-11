@@ -9,11 +9,11 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { TypeDistribution } from '../../../types';
+import { Distribution } from '../../../types';
 import { ChartCard, ChartTitle } from './';
 
 interface TypeDistributionChartProps {
-  data: TypeDistribution[];
+  data: Distribution[];
 }
 
 const TypeDistributionChart: React.FC<TypeDistributionChartProps> = ({ data }) => {

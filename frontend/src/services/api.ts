@@ -1,10 +1,7 @@
 import axios from 'axios';
 import { 
-  DataPoint, 
-  CreateDataPointRequest, 
   Pokemon, 
-  TypeDistribution, 
-  EvolutionDistribution, 
+  Distribution, 
   PokemonStatsSummary 
 } from '../types';
 
@@ -17,31 +14,6 @@ const api = axios.create({
   },
   withCredentials: true,
 });
-
-export const dashboardAPI = {
-  // Get all dashboard data
-  getData: async (): Promise<DataPoint[]> => {
-    const response = await api.get('/dashboard');
-    return response.data;
-  },
-
-  // Create new data point
-  createDataPoint: async (data: CreateDataPointRequest): Promise<DataPoint> => {
-    const response = await api.post('/dashboard', data);
-    return response.data;
-  },
-
-  // Update data point
-  updateDataPoint: async (id: string, data: CreateDataPointRequest): Promise<DataPoint> => {
-    const response = await api.put(`/dashboard/${id}`, data);
-    return response.data;
-  },
-
-  // Delete data point
-  deleteDataPoint: async (id: string): Promise<void> => {
-    await api.delete(`/dashboard/${id}`);
-  },
-};
 
 export const pokemonAPI = {
   // Get all Pokemon
@@ -69,14 +41,20 @@ export const pokemonAPI = {
   },
 
   // Get type distribution
-  getTypeDistribution: async (): Promise<TypeDistribution[]> => {
+  getTypeDistribution: async (): Promise<Distribution[]> => {
     const response = await api.get('/pokemon/types');
     return response.data;
   },
 
   // Get evolution distribution
-  getEvolutionDistribution: async (): Promise<EvolutionDistribution[]> => {
+  getEvolutionDistribution: async (): Promise<Distribution[]> => {
     const response = await api.get('/pokemon/evolution');
+    return response.data;
+  },
+
+  // Get generation distribution
+  getGenerationDistribution: async (): Promise<Distribution[]> => {
+    const response = await api.get('/pokemon/generation');
     return response.data;
   },
 

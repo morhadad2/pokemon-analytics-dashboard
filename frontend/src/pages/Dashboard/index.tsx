@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
-  TypeDistribution, 
-  EvolutionDistribution, 
+  Distribution, 
   Pokemon 
 } from '../../types';
 import {
@@ -20,8 +19,8 @@ const DashboardPageHeader = styled(PageHeader)`
 `;
 
 interface DashboardProps {
-  typeDistribution: TypeDistribution[];
-  evolutionDistribution: EvolutionDistribution[];
+  typeDistribution: Distribution[];
+  evolutionDistribution: Distribution[];
   topPokemonByAttack: Pokemon[];
   topPokemonByHp: Pokemon[];
   topPokemonByDefense: Pokemon[];
