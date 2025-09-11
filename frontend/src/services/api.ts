@@ -63,6 +63,12 @@ export const pokemonAPI = {
     const response = await api.get('/pokemon/rarity');
     return response.data;
   },
+
+  // Get stats evolution over time
+  getStatsEvolutionOverTime: async (): Promise<any> => {
+    const response = await api.get('/pokemon/stats-evolution');
+    return response.data;
+  },
 };
 
 export default api;

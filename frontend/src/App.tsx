@@ -119,6 +119,7 @@ function AppContent() {
   const [topPokemonBySpeed, setTopPokemonBySpeed] = useState<Pokemon[]>([]);
   const [pokemonStats, setPokemonStats] = useState<PokemonStatsSummary | null>(null);
   const [rarityAnalysis, setRarityAnalysis] = useState<any>(null);
+  const [statsEvolution, setStatsEvolution] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
@@ -140,7 +141,8 @@ function AppContent() {
         defenseData,
         speedData,
         statsData,
-        rarityData
+        rarityData,
+        statsEvolutionData
       ] = await Promise.all([
         pokemonAPI.getAllPokemon(),
         pokemonAPI.getTypeDistribution(),
@@ -150,7 +152,8 @@ function AppContent() {
         pokemonAPI.getTopPokemonByStat('defense'),
         pokemonAPI.getTopPokemonByStat('speed'),
         pokemonAPI.getPokemonStats(),
-        pokemonAPI.getRarityAnalysis()
+        pokemonAPI.getRarityAnalysis(),
+        pokemonAPI.getStatsEvolutionOverTime()
       ]);
       
       setPokemon(pokemonData);
@@ -162,6 +165,7 @@ function AppContent() {
       setTopPokemonBySpeed(speedData);
       setPokemonStats(statsData);
       setRarityAnalysis(rarityData);
+      setStatsEvolution(statsEvolutionData);
       setLastUpdated(new Date());
       
       console.log('🔄 Pokemon data updated at:', new Date().toLocaleTimeString());
@@ -212,6 +216,7 @@ function AppContent() {
             topPokemonByDefense={topPokemonByDefense}
             topPokemonBySpeed={topPokemonBySpeed}
             rarityAnalysis={rarityAnalysis}
+            statsEvolution={statsEvolution}
           />
         );
       case 'search':

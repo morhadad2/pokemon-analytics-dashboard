@@ -183,3 +183,68 @@ export const getRarityAnalysis = async (req: Request, res: Response) => {
   }
 };
 
+export const getStatsEvolutionOverTime = async (req: Request, res: Response) => {
+  try {
+    // Group Pokemon by their fetchedAt date (hourly batches)
+    const statsEvolution = await Pokemon.aggregate([
+      {
+        $group: {
+          _id: {
+            year: { $year: '$fetchedAt' },
+            month: { $month: '$fetchedAt' },
+            day: { $dayOfMonth: '$fetchedAt' },
+            hour: { $hour: '$fetchedAt' }
+          },
+          count: { $sum: 1 },
+          avgHp: { $avg: '$stats.hp' },
+          avgAttack: { $avg: '$stats.attack' },
+          avgDefense: { $avg: '$stats.defense' },
+          avgSpecialAttack: { $avg: '$stats.specialAttack' },
+          avgSpecialDefense: { $avg: '$stats.specialDefense' },
+          avgSpeed: { $avg: '$stats.speed' },
+          avgTotalStats: { 
+            $avg: { 
+              $add: [
+                '$stats.hp', 
+                '$stats.attack', 
+                '$stats.defense', 
+                '$stats.specialAttack', 
+                '$stats.specialDefense', 
+                '$stats.speed'
+              ] 
+            } 
+          }
+        }
+      },
+      {
+        $sort: { '_id.year': 1, '_id.month': 1, '_id.day': 1, '_id.hour': 1 }
+      },
+      {
+        $project: {
+          _id: 0,
+          timestamp: {
+            $dateFromParts: {
+              year: '$_id.year',
+              month: '$_id.month',
+              day: '$_id.day',
+              hour: '$_id.hour'
+            }
+          },
+          count: 1,
+          avgHp: { $round: ['$avgHp', 1] },
+          avgAttack: { $round: ['$avgAttack', 1] },
+          avgDefense: { $round: ['$avgDefense', 1] },
+          avgSpecialAttack: { $round: ['$avgSpecialAttack', 1] },
+          avgSpecialDefense: { $round: ['$avgSpecialDefense', 1] },
+          avgSpeed: { $round: ['$avgSpeed', 1] },
+          avgTotalStats: { $round: ['$avgTotalStats', 1] }
+        }
+      }
+    ]);
+
+    res.json(statsEvolution);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching stats evolution over time' });
+  }
+};
+
