@@ -192,8 +192,7 @@ export class PokemonService {
       const lastPokemon = await Pokemon.findOne().sort({ pokemonId: -1 });
       const startId = lastPokemon ? lastPokemon.pokemonId + 1 : 1;
       
-      // PokeAPI has approximately 1,070 Pokemon, so we'll limit our range
-      const MAX_POKEMON_ID = 1070;
+      const MAX_POKEMON_ID = 1000;
       const endId = Math.min(startId + 50, MAX_POKEMON_ID + 1);
       
       if (startId > MAX_POKEMON_ID) {
@@ -213,8 +212,8 @@ export class PokemonService {
       const failed = results.filter(result => result.status === 'rejected').length;
       
       console.log(`Completed fetching Pokemon batch starting from ID ${startId}`);
-      console.log(`✅ Successfully fetched: ${successful} Pokemon`);
-      console.log(`❌ Failed to fetch: ${failed} Pokemon`);
+      console.log(`Successfully fetched: ${successful} Pokemon`);
+      console.log(`Failed to fetch: ${failed} Pokemon`);
       
       // If we hit the limit, log it
       if (endId >= MAX_POKEMON_ID) {

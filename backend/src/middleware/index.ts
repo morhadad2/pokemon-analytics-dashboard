@@ -24,9 +24,7 @@ export const setupMiddleware = (app: any) => {
   // Body parsing
   app.use(jsonMiddleware);
   
-  // 404 handler (should be before routes)
-  app.use(notFoundHandler);
-  
+  // Note: 404 handler should be added AFTER routes in main index.ts
   // Error handler (should be last)
   app.use(errorHandler);
 };

@@ -5,7 +5,7 @@ import cron from 'node-cron';
 import pokemonRoutes from './routes/pokemon';
 import dashboardRoutes from './routes/dashboard';
 import { PokemonService } from './services/pokemonService';
-import { setupMiddleware } from './middleware';
+import { setupMiddleware, notFoundHandler } from './middleware';
 
 dotenv.config();
 
@@ -40,6 +40,9 @@ app.get('/api/health', (req, res) => {
     environment: process.env.NODE_ENV || 'development'
   });
 });
+
+// 404 handler (must be after all routes)
+app.use(notFoundHandler);
 
 // Schedule Pokemon data fetching every 10 minutes
 const schedulePokemonFetching = () => {
