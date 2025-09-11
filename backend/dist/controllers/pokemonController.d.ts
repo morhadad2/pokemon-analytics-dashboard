@@ -6,5 +6,5 @@ export declare const getPokemonStats: (req: Request, res: Response) => Promise<v
 export declare const getTypeDistribution: (req: Request, res: Response) => Promise<void>;
 export declare const getEvolutionDistribution: (req: Request, res: Response) => Promise<void>;
 export declare const getTopPokemonByStat: (req: Request, res: Response) => Promise<Response<any, Record<string, any>> | undefined>;
-export declare const getGenerationDistribution: (req: Request, res: Response) => Promise<void>;
+export declare const getRarityAnalysis: (req: Request, res: Response) => Promise<void>;
 //# sourceMappingURL=pokemonController.d.ts.map

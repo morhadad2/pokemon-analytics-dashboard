@@ -6,7 +6,8 @@ import {
   getPokemonStats,
   getTypeDistribution,
   getEvolutionDistribution,
-  getTopPokemonByStat
+  getTopPokemonByStat,
+  getRarityAnalysis
 } from '../controllers/pokemonController';
 
 const router = Router();
@@ -26,10 +27,14 @@ router.get('/evolution', getEvolutionDistribution);
 // GET /api/pokemon/top/:stat - Get top Pokemon by specific stat
 router.get('/top/:stat', getTopPokemonByStat);
 
+// GET /api/pokemon/rarity - Get rarity analysis
+router.get('/rarity', getRarityAnalysis);
+
 // GET /api/pokemon/search - Search Pokemon by name
 router.get('/search', searchPokemon);
 
 // GET /api/pokemon/:id - Get Pokemon by ID
 router.get('/:id', getPokemonById);
+
 
 export default router;

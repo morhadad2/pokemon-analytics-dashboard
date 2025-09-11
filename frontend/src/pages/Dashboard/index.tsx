@@ -12,6 +12,7 @@ import { DashboardGrid } from './components';
 import TypeDistributionChart from './components/TypeDistributionChart';
 import EvolutionDistributionChart from './components/EvolutionDistributionChart';
 import TopPokemonChart from './components/TopPokemonChart';
+import RarityDistributionChart from './components/RarityDistributionChart';
 import styled from 'styled-components';
 
 const DashboardPageHeader = styled(PageHeader)`
@@ -25,6 +26,7 @@ interface DashboardProps {
   topPokemonByHp: Pokemon[];
   topPokemonByDefense: Pokemon[];
   topPokemonBySpeed: Pokemon[];
+  rarityAnalysis: any;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({
@@ -34,6 +36,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   topPokemonByHp,
   topPokemonByDefense,
   topPokemonBySpeed,
+  rarityAnalysis,
 }) => {
   return (
     <>
@@ -50,14 +53,17 @@ const Dashboard: React.FC<DashboardProps> = ({
       </DashboardGrid>
 
       <DashboardGrid>
+          <RarityDistributionChart pokemon={rarityAnalysis.pokemon} />
+        </DashboardGrid>
+        
+      <DashboardGrid>
         <TopPokemonChart data={topPokemonByAttack} statName="attack" />
         <TopPokemonChart data={topPokemonByHp} statName="hp" />
       </DashboardGrid>
 
-      <DashboardGrid>
-        <TopPokemonChart data={topPokemonByDefense} statName="defense" />
-        <TopPokemonChart data={topPokemonBySpeed} statName="speed" />
-      </DashboardGrid>
+
+
+
     </>
   );
 };

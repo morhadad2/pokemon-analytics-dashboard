@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getGenerationDistribution = exports.getTopPokemonByStat = exports.getEvolutionDistribution = exports.getTypeDistribution = exports.getPokemonStats = exports.searchPokemon = exports.getPokemonById = exports.getAllPokemon = void 0;
+exports.getRarityAnalysis = exports.getTopPokemonByStat = exports.getEvolutionDistribution = exports.getTypeDistribution = exports.getPokemonStats = exports.searchPokemon = exports.getPokemonById = exports.getAllPokemon = void 0;
 const Pokemon_1 = __importDefault(require("../models/Pokemon"));
 const getAllPokemon = async (req, res) => {
     try {
@@ -129,17 +129,57 @@ const getTopPokemonByStat = async (req, res) => {
     }
 };
 exports.getTopPokemonByStat = getTopPokemonByStat;
-const getGenerationDistribution = async (req, res) => {
+const getRarityAnalysis = async (req, res) => {
     try {
-        const generationDistribution = await Pokemon_1.default.aggregate([
-            { $group: { _id: '$generation', count: { $sum: 1 } } },
-            { $sort: { _id: 1 } }
-        ]);
-        res.json(generationDistribution);
+        const pokemon = await Pokemon_1.default.find().select('name pokemonId stats types');
+        // Calculate total stats for each Pokemon
+        const pokemonWithTotalStats = pokemon.map(p => ({
+            ...p.toObject(),
+            totalStats: Object.values(p.stats).reduce((sum, stat) => sum + stat, 0)
+        }));
+        // Sort by total stats to find percentiles
+        const sortedPokemon = pokemonWithTotalStats.sort((a, b) => b.totalStats - a.totalStats);
+        const totalCount = sortedPokemon.length;
+        // Define rarity tiers based on percentiles
+        const getTierFromPercentile = (index) => {
+            const percentile = (index / totalCount) * 100;
+            if (percentile <= 1)
+                return 'S';
+            if (percentile <= 5)
+                return 'A';
+            if (percentile <= 15)
+                return 'B';
+            if (percentile <= 40)
+                return 'C';
+            return 'D';
+        };
+        // Create tier data
+        const tierCounts = {};
+        sortedPokemon.forEach((p, index) => {
+            const tier = getTierFromPercentile(index);
+            tierCounts[tier] = (tierCounts[tier] || 0) + 1;
+        });
+        const tierData = [
+            { tier: 'S', count: tierCounts.S || 0, description: 'Legendary (Top 1%)' },
+            { tier: 'A', count: tierCounts.A || 0, description: 'Elite (Top 5%)' },
+            { tier: 'B', count: tierCounts.B || 0, description: 'Strong (Top 15%)' },
+            { tier: 'C', count: tierCounts.C || 0, description: 'Average (Top 40%)' },
+            { tier: 'D', count: tierCounts.D || 0, description: 'Common (Bottom 60%)' }
+        ].map(tier => ({
+            ...tier,
+            percentage: ((tier.count / totalCount) * 100).toFixed(1)
+        }));
+        res.json({
+            pokemon: sortedPokemon,
+            tierData,
+            totalCount,
+            minStats: Math.min(...pokemonWithTotalStats.map(p => p.totalStats)),
+            maxStats: Math.max(...pokemonWithTotalStats.map(p => p.totalStats))
+        });
     }
     catch (error) {
-        res.status(500).json({ message: 'Error fetching generation distribution' });
+        res.status(500).json({ message: 'Error fetching rarity analysis' });
     }
 };
-exports.getGenerationDistribution = getGenerationDistribution;
+exports.getRarityAnalysis = getRarityAnalysis;
 //# sourceMappingURL=pokemonController.js.map

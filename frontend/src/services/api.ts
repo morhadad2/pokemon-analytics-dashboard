@@ -52,15 +52,15 @@ export const pokemonAPI = {
     return response.data;
   },
 
-  // Get generation distribution
-  getGenerationDistribution: async (): Promise<Distribution[]> => {
-    const response = await api.get('/pokemon/generation');
-    return response.data;
-  },
-
   // Get top Pokemon by stat
   getTopPokemonByStat: async (stat: string): Promise<Pokemon[]> => {
     const response = await api.get(`/pokemon/top/${stat}`);
+    return response.data;
+  },
+
+  // Get rarity analysis
+  getRarityAnalysis: async (): Promise<any> => {
+    const response = await api.get('/pokemon/rarity');
     return response.data;
   },
 };
