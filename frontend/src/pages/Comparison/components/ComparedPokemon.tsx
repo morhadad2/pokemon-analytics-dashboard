@@ -37,6 +37,10 @@ const ComparedPokemon: React.FC<ComparedPokemonProps> = ({
 }) => {
   const CardComponent = variant === 'primary' ? PokemonCard : PokemonCard2;
 
+  const handlePokemonSelect = (selectedPokemon: Pokemon) => {
+    onPokemonSelect(selectedPokemon);
+  };
+
   return (
     <div>
       <FormGroup>
@@ -44,7 +48,7 @@ const ComparedPokemon: React.FC<ComparedPokemonProps> = ({
         <AutocompleteInput
           placeholder={`Search ${label.toLowerCase()}...`}
           allPokemon={allPokemon}
-          onSelect={onPokemonSelect}
+          onSelect={handlePokemonSelect}
           value={searchTerm}
           onChange={onSearchChange}
         />

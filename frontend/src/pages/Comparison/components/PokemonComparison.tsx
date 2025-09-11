@@ -58,11 +58,15 @@ const PokemonComparison: React.FC = () => {
   }, []);
 
   const handlePokemonSelect = (id: string, pokemon: Pokemon) => {
-    setComparedPokemon(prev => prev.map(item => 
-      item.id === id 
-        ? { ...item, pokemon, searchTerm: pokemon.name }
-        : item
-    ));
+    
+    setComparedPokemon(prev => {
+      const updated = prev.map(item => 
+        item.id === id 
+          ? { ...item, pokemon, searchTerm: pokemon.name }
+          : item
+      );
+      return updated;
+    });
   };
 
   const handleSearchChange = (id: string, term: string) => {
@@ -74,7 +78,7 @@ const PokemonComparison: React.FC = () => {
   };
 
   const addPokemonSlot = () => {
-    if (comparedPokemon.length < MAX_POKEMON_COUNT) { // Limit to 6 for readability
+    if (comparedPokemon.length < MAX_POKEMON_COUNT) { 
       const newId = (comparedPokemon.length + 1).toString();
       setComparedPokemon(prev => [...prev, { id: newId, pokemon: null, searchTerm: '' }]);
     }
@@ -206,7 +210,7 @@ const PokemonComparison: React.FC = () => {
 
       <div style={{ textAlign: 'center', margin: '20px 0' }}>
         <Button onClick={addPokemonSlot} disabled={comparedPokemon.length >= MAX_POKEMON_COUNT}>
-          ➕ Add Pokemon ({comparedPokemon.length}/6)
+          ➕ Add Pokemon ({comparedPokemon.length}/{MAX_POKEMON_COUNT})
         </Button>
       </div>
 

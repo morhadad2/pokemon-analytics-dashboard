@@ -140,11 +140,9 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
 
     const filteredSuggestions = allPokemon
       .filter(pokemon => 
-        pokemon.name.toLowerCase().includes(value.toLowerCase()) ||
-        pokemon.types.some(type => type.toLowerCase().includes(value.toLowerCase())) ||
-        pokemon.pokemonId.toString().includes(value)
+        pokemon.name.toLowerCase().includes(value.toLowerCase()) 
       )
-      .slice(0, 8); // Limit to 8 suggestions
+      .slice(0, 3); // Limit to 3 suggestions
 
     setSuggestions(filteredSuggestions);
     setShowSuggestions(filteredSuggestions.length > 0);
@@ -156,6 +154,7 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
   };
 
   const handleSuggestionClick = (pokemon: Pokemon) => {
+    console.log('🔍 AutocompleteInput handleSuggestionClick called:', { pokemonName: pokemon.name, value });
     onChange(pokemon.name);
     onSelect(pokemon);
     setShowSuggestions(false);
