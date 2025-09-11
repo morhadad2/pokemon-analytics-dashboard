@@ -12,7 +12,11 @@ const SearchPageHeader = styled(PageHeader)`
   background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.1));
 `;
 
-const Search: React.FC = () => {
+interface SearchProps {
+  allPokemon: Pokemon[];
+}
+
+const Search: React.FC<SearchProps> = ({ allPokemon }) => {
   const handlePokemonSelected = (pokemon: Pokemon) => {
     // Pokemon selection handled within PokemonSearch component
     console.log('Pokemon selected:', pokemon.name);
@@ -27,7 +31,7 @@ const Search: React.FC = () => {
         </PageSubtitle>
       </SearchPageHeader>
 
-      <PokemonSearch onPokemonSelected={handlePokemonSelected} />
+      <PokemonSearch onPokemonSelected={handlePokemonSelected} allPokemon={allPokemon} />
     </>
   );
 };

@@ -1,172 +1,114 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-const slideIn = keyframes`
+const slideDown = keyframes`
   from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-`;
-
-const fadeIn = keyframes`
-  from {
+    transform: translateY(-100%);
     opacity: 0;
   }
   to {
+    transform: translateY(0);
     opacity: 1;
   }
 `;
 
-const HamburgerButton = styled.button`
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1001;
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  border: 3px solid #2c3e50;
-  border-radius: 8px;
-  padding: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-
-  &:hover {
-    background: linear-gradient(135deg, #c0392b, #a93226);
-    transform: scale(1.05);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-`;
-
-const HamburgerIcon = styled.div<{ isOpen: boolean }>`
-  width: 25px;
-  height: 3px;
-  background: #ecf0f1;
-  transition: all 0.3s ease;
-  position: relative;
-
-  &:before,
-  &:after {
-    content: '';
-    position: absolute;
-    width: 25px;
-    height: 3px;
-    background: #ecf0f1;
-    transition: all 0.3s ease;
-  }
-
-  &:before {
-    top: ${props => props.isOpen ? '0' : '-8px'};
-    transform: ${props => props.isOpen ? 'rotate(45deg)' : 'rotate(0)'};
-  }
-
-  &:after {
-    top: ${props => props.isOpen ? '0' : '8px'};
-    transform: ${props => props.isOpen ? 'rotate(-45deg)' : 'rotate(0)'};
-  }
-
-  ${props => props.isOpen && `
-    background: transparent;
-  `}
-`;
-
-const Overlay = styled.div<{ isOpen: boolean }>`
+const NavbarContainer = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  opacity: ${props => props.isOpen ? 1 : 0};
-  visibility: ${props => props.isOpen ? 'visible' : 'hidden'};
-  transition: all 0.3s ease;
-`;
-
-const MenuContainer = styled.div<{ isOpen: boolean }>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 300px;
-  height: 100%;
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-  z-index: 1000;
-  transform: translateX(${props => props.isOpen ? '0' : '-100%'});
-  transition: transform 0.3s ease;
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
-  border-right: 4px solid #e74c3c;
-`;
-
-const MenuHeader = styled.div`
-  padding: 80px 20px 20px 20px;
+  right: 0;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
   border-bottom: 3px solid #e74c3c;
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  z-index: 1000;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 2px 10px rgba(231, 76, 60, 0.2);
+  animation: ${slideDown} 0.5s ease-out;
+  backdrop-filter: blur(10px);
 `;
 
-const MenuTitle = styled.h2`
-  color: #ecf0f1;
+const NavbarContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 80px;
+  padding: 0 30px;
+  
+  @media (max-width: 768px) {
+    height: 70px;
+    padding: 0 20px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 60px;
+    padding: 0 15px;
+  }
+`;
+
+const Logo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
   font-family: 'Press Start 2P', monospace;
-  font-size: 1rem;
-  margin: 0;
-  text-align: center;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-`;
-
-const MenuList = styled.ul`
-  list-style: none;
-  padding: 20px 0;
-  margin: 0;
-`;
-
-const MenuItem = styled.li<{ isActive: boolean }>`
-  margin: 0;
-`;
-
-const MenuButton = styled.button<{ isActive: boolean }>`
-  width: 100%;
-  background: ${props => props.isActive ? 
-    'linear-gradient(135deg, #e74c3c, #c0392b)' : 
-    'transparent'
-  };
-  border: none;
+  font-size: 1.4rem;
   color: #ecf0f1;
-  padding: 20px 30px;
-  text-align: left;
-  font-family: 'Orbitron', monospace;
-  font-size: 1rem;
-  font-weight: bold;
+  text-shadow: 
+    2px 2px 0px #2c3e50,
+    4px 4px 8px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   transition: all 0.3s ease;
-  border-left: ${props => props.isActive ? '4px solid #f39c12' : '4px solid transparent'};
-  text-transform: uppercase;
-  letter-spacing: 1px;
-
+  
   &:hover {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    border-left: 4px solid #f39c12;
-    transform: translateX(5px);
+    transform: scale(1.05);
+    text-shadow: 
+      2px 2px 0px #2c3e50,
+      4px 4px 8px rgba(0, 0, 0, 0.5),
+      0 0 20px rgba(231, 76, 60, 0.5);
   }
-
-  &:before {
-    content: '▸ ';
-    color: #f39c12;
-    margin-right: 10px;
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    gap: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+    gap: 10px;
   }
 `;
 
-const Pokeball = styled.div`
-  width: 30px;
-  height: 30px;
+const PokeballLogo = styled.div`
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
   background: linear-gradient(180deg, #e74c3c 50%, #ecf0f1 50%);
-  border: 2px solid #2c3e50;
+  border: 4px solid #2c3e50;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.3);
+  
+  &:hover {
+    transform: rotate(360deg) scale(1.1);
+    box-shadow: 
+      inset 0 2px 4px rgba(0, 0, 0, 0.2),
+      0 6px 12px rgba(231, 76, 60, 0.4);
+  }
+  
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #2c3e50;
+  }
+  
+  @media (max-width: 480px) {
+    width: 35px;
+    height: 35px;
+    border: 2px solid #2c3e50;
+  }
   
   &:before {
     content: '';
@@ -174,11 +116,24 @@ const Pokeball = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
+    width: 16px;
+    height: 16px;
     background: #ecf0f1;
     border-radius: 50%;
-    border: 1px solid #2c3e50;
+    border: 3px solid #2c3e50;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+    
+    @media (max-width: 768px) {
+      width: 12px;
+      height: 12px;
+      border: 2px solid #2c3e50;
+    }
+    
+    @media (max-width: 480px) {
+      width: 10px;
+      height: 10px;
+      border: 1px solid #2c3e50;
+    }
   }
   
   &:after {
@@ -187,9 +142,122 @@ const Pokeball = styled.div`
     top: 50%;
     left: 0;
     right: 0;
-    height: 2px;
+    height: 4px;
     background: #2c3e50;
-    transform: translateY(-50%);
+    transform: translateY(-50%);ERROR in src/App.tsx:69:33
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    
+    @media (max-width: 768px) {
+      height: 3px;
+    }
+    
+    @media (max-width: 480px) {
+      height: 2px;
+    }
+  }
+`;
+
+const NavItems = styled.ul`
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 15px;
+  
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 8px;
+  }
+`;
+
+const NavItem = styled.li`
+  margin: 0;
+`;
+
+const NavButton = styled.button<{ isActive: boolean }>`
+  background: ${props => props.isActive ? 
+    'linear-gradient(135deg, #e74c3c, #c0392b)' : 
+    'linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.1))'
+  };
+  border: 2px solid ${props => props.isActive ? '#f39c12' : 'transparent'};
+  color: #ecf0f1;
+  padding: 15px 25px;
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border-color: #f39c12;
+    transform: translateY(-3px);
+    box-shadow: 
+      0 8px 25px rgba(231, 76, 60, 0.4),
+      0 4px 15px rgba(0, 0, 0, 0.2);
+    
+    &:before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 12px 18px;
+    font-size: 0.9rem;
+    gap: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 10px 14px;
+    font-size: 0.8rem;
+    gap: 6px;
+  }
+`;
+
+const NavIcon = styled.span`
+  font-size: 1.2rem;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+`;
+
+const NavLabel = styled.span`
+  @media (max-width: 480px) {
+    display: none;
   }
 `;
 
@@ -201,52 +269,35 @@ interface NavigationProps {
 }
 
 const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handlePageChange = (page: NavigationPage) => {
-    onPageChange(page);
-    setIsOpen(false);
-  };
-
   const menuItems = [
     { id: 'dashboard' as NavigationPage, label: 'Dashboard', icon: '📊' },
-    { id: 'search' as NavigationPage, label: 'Pokemon Search', icon: '🔍' },
-    { id: 'comparison' as NavigationPage, label: 'Compare Pokemon', icon: '⚔️' },
+    { id: 'search' as NavigationPage, label: 'Search', icon: '🔍' },
+    { id: 'comparison' as NavigationPage, label: 'Compare', icon: '⚔️' },
   ];
 
   return (
-    <>
-      <HamburgerButton onClick={toggleMenu}>
-        <HamburgerIcon isOpen={isOpen} />
-      </HamburgerButton>
-
-      <Overlay isOpen={isOpen} onClick={() => setIsOpen(false)} />
-
-      <MenuContainer isOpen={isOpen}>
-        <MenuHeader>
-          <MenuTitle>POKESTATS MENU</MenuTitle>
-        </MenuHeader>
-
-        <MenuList>
+    <NavbarContainer>
+      <NavbarContent>
+        <Logo onClick={() => onPageChange('dashboard')}>
+          <PokeballLogo />
+          POKESTATS
+        </Logo>
+        
+        <NavItems>
           {menuItems.map((item) => (
-            <MenuItem key={item.id} isActive={currentPage === item.id}>
-              <MenuButton
+            <NavItem key={item.id}>
+              <NavButton
                 isActive={currentPage === item.id}
-                onClick={() => handlePageChange(item.id)}
+                onClick={() => onPageChange(item.id)}
               >
-                {item.icon} {item.label}
-              </MenuButton>
-            </MenuItem>
+                <NavIcon>{item.icon}</NavIcon>
+                <NavLabel>{item.label}</NavLabel>
+              </NavButton>
+            </NavItem>
           ))}
-        </MenuList>
-
-        <Pokeball />
-      </MenuContainer>
-    </>
+        </NavItems>
+      </NavbarContent>
+    </NavbarContainer>
   );
 };
 

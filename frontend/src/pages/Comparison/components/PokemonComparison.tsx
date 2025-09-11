@@ -36,26 +36,16 @@ interface ComparedPokemonData {
   searchTerm: string;
 }
 
-const PokemonComparison: React.FC = () => {
+interface PokemonComparisonProps {
+  allPokemon: Pokemon[];
+}
+
+const PokemonComparison: React.FC<PokemonComparisonProps> = ({ allPokemon }) => {
   const MAX_POKEMON_COUNT = 3;
   const [comparedPokemon, setComparedPokemon] = useState<ComparedPokemonData[]>([
     { id: '1', pokemon: null, searchTerm: '' },
     { id: '2', pokemon: null, searchTerm: '' }
   ]);
-  const [allPokemon, setAllPokemon] = useState<Pokemon[]>([]);
-
-  useEffect(() => {
-    const fetchAllPokemon = async () => {
-      try {
-        const data = await pokemonAPI.getAllPokemon();
-        setAllPokemon(data);
-      } catch (error) {
-        console.error('Error fetching Pokemon:', error);
-      }
-    };
-
-    fetchAllPokemon();
-  }, []);
 
   const handlePokemonSelect = (id: string, pokemon: Pokemon) => {
     

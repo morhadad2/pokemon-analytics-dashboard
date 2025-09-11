@@ -47,15 +47,15 @@ app.use(notFoundHandler);
 // Schedule Pokemon data fetching every 10 minutes
 const schedulePokemonFetching = () => {
   // Run immediately on startup
-  PokemonService.fetchNext50Pokemon().catch(console.error);
+  PokemonService.fetchNextPokemons().catch(console.error);
   
-  // Schedule to run every 10 minutes
-  cron.schedule('*/10 * * * *', async () => {
+  // Schedule to run every 2 minutes
+  cron.schedule('*/2 * * * *', async () => {
     console.log('Running scheduled Pokemon fetch...');
     try {
       const stats = await PokemonService.getPokemonStats();
       console.log(`📊 Current Pokemon collection: ${stats.progress}`);
-      await PokemonService.fetchNext50Pokemon();
+      await PokemonService.fetchNextPokemons();
     } catch (error) {
       console.error('Scheduled fetch error:', error);
     }

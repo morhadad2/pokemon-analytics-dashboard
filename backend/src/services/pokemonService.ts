@@ -184,16 +184,17 @@ export class PokemonService {
     }
   }
 
-  static async fetchNext50Pokemon(): Promise<void> {
+  static async fetchNextPokemons(): Promise<void> {
     try {
-      console.log('Starting to fetch next 50 Pokemon...');
+      console.log('Starting to fetch next Pokemons...');
+      const numOfPokemonToGet = 20;
       
       // Get the highest Pokemon ID we have
       const lastPokemon = await Pokemon.findOne().sort({ pokemonId: -1 });
       const startId = lastPokemon ? lastPokemon.pokemonId + 1 : 1;
       
       const MAX_POKEMON_ID = 1000;
-      const endId = Math.min(startId + 50, MAX_POKEMON_ID + 1);
+      const endId = Math.min(startId + numOfPokemonToGet, MAX_POKEMON_ID + 1);
       
       if (startId > MAX_POKEMON_ID) {
         console.log(`All Pokemon have been fetched! no data to fetch`);

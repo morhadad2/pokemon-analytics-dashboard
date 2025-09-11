@@ -66,7 +66,7 @@ const LoadingProgress = styled.div`
 `;
 
 const StyledContainer = styled(Container)`
-  padding-top: ${({ theme }) => theme.spacing['3xl']};
+  padding-top: ${({ theme }) => theme.spacing['5xl']}; /* Increased padding for new navbar */
   padding-left: ${({ theme }) => theme.spacing['3xl']};
 `;
 
@@ -177,9 +177,9 @@ function AppContent() {
           />
         );
       case 'search':
-        return <Search />;
+        return <Search allPokemon={pokemon} />;
       case 'comparison':
-        return <Comparison />;
+        return <Comparison allPokemon={pokemon} />;
       default:
         return null;
     }

@@ -92,27 +92,13 @@ const SectionTitle = styled.h3`
 
 interface PokemonSearchProps {
   onPokemonSelected: (pokemon: Pokemon) => void;
+  allPokemon: Pokemon[];
 }
 
-const PokemonSearch: React.FC<PokemonSearchProps> = ({ onPokemonSelected }) => {
+const PokemonSearch: React.FC<PokemonSearchProps> = ({ onPokemonSelected, allPokemon }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [allPokemon, setAllPokemon] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
-
-  // Fetch all Pokemon for autocomplete
-  useEffect(() => {
-    const fetchAllPokemon = async () => {
-      try {
-        const pokemon = await pokemonAPI.getAllPokemon();
-        setAllPokemon(pokemon);
-      } catch (error) {
-        console.error('Error fetching Pokemon for autocomplete:', error);
-      }
-    };
-
-    fetchAllPokemon();
-  }, []);
 
   const handlePokemonSelect = (pokemon: Pokemon) => {
     setSelectedPokemon(pokemon);
