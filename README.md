@@ -1,6 +1,6 @@
 # Pokemon Analytics Dashboard
 
-A full-stack Pokemon analytics dashboard that fetches data from the Pokemon API every hour and provides interactive visualizations of Pokemon statistics, types, evolution stages, and more.
+A full-stack Pokemon analytics dashboard that fetches data from the Pokemon API every couple of minutes and provides interactive visualizations of Pokemon statistics, types, evolution stages, and more.
 
 ## Project Structure
 
@@ -28,7 +28,7 @@ cd backend
 npm install
 ```
 
-3. Create a `.env` file in the backend directory:
+3. update the `.env` file in the backend directory with the correct MONGODB_URI:
 ```env
 PORT=5001
 MONGODB_URI=ASK for more the URL for mongoAtlAs instance l
@@ -43,14 +43,14 @@ npm run dev
 The backend will be available at `http://localhost:5001`
 
 ### API Endpoints
-
-
 - `GET /api/pokemon` - Get all Pokemon
 - `GET /api/pokemon/:id` - Get Pokemon by ID
 - `GET /api/pokemon/search?name=name` - Search Pokemon by name
 - `GET /api/pokemon/stats` - Get overall Pokemon statistics
-- `GET /api/pokemon/types` - Get Pokemon type distribution
-- `GET /api/pokemon/evolution` - Get evolution stage distribution
+- `GET /api/dashboard/types` - Get Pokemon type distribution
+- `GET /api/dashboard/evolution` - Get evolution stage distribution
+- `GET /api/dashboard/rarity` - Get rarity analysis data
+- `GET /api/dashboard/stats-evolution` - Get stats evolution over time
 - `GET /api/pokemon/top/:stat` - Get top Pokemon by specific stat (hp, attack, defense, etc.)
 
 ## Frontend Setup
@@ -70,12 +70,7 @@ cd frontend
 npm install
 ```
 
-3. Create a `.env` file in the frontend directory:
-```env
-REACT_APP_API_URL=http://localhost:5001/api
-```
-
-4. Start the development server:
+3. Start the development server:
 ```bash
 npm start
 ```
@@ -86,7 +81,7 @@ The frontend will be available at `http://localhost:3000`
 
 ### Backend Features
 - **Pokemon API Integration**: Fetches data from pokeapi.co every 10 minutes using a cron job (simulate getting new data in a live env we just add 50 pokemons using this job if u want to  also for each time the bE is starting he will fetch the next 50 pokemons, if we wannt to simulate getting new data we can change the cron job for every minute or to every 2-3 minutes in backend/src/index.ts:50)
-- **Scheduled Data Fetching**: Automatically fetches next 50 Pokemon every hour using cron jobs
+- **Scheduled Data Fetching**: Automatically fetches next 50 Pokemon every 10 minutes using cron job
 
 ### Frontend Features
 - **Interactive Charts**: Multiple visualization types:
@@ -97,15 +92,17 @@ The frontend will be available at `http://localhost:3000`
 - **Real-time Data**: Charts update as new Pokemon are fetched
 - **Pokemon Search**: Search and view individual Pokemon details
 - **Pokemon Comparison**: Search and compare between multiple pokemons.
-
-
+- **Rarity Analysis**: Power level histograms and tier distributions (S, A, B, C, D)
+- **Trend Analysis**: Stats evolution over time with line charts
+- **Auto-refresh**: Real-time data updates every 2 minutes
+- **Pokemon Comparison**: Multi-Pokemon comparison with radar charts
 
 ## Usage
 
 1. Start the backend server: `cd backend && npm run dev`
    - The server will automatically start fetching Pokemon data
    - First batch of 50 Pokemon will be fetched immediately
-   - Every 10 minutes , the next 50 Pokemon will be fetched
+   - Every 2 minutes, the next 20 Pokemon will be fetched
 3. Start the frontend server: `cd frontend && npm start`
 4. Open `http://localhost:3000` in your browser
 5. Explore the Pokemon dashboard:
