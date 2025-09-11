@@ -72,10 +72,10 @@ const startServer = async () => {
   schedulePokemonFetching();
   
   app.listen(PORT, () => {
-    console.log(`🚀 Server is running on port ${PORT}`);
-    console.log(`📊 Pokemon API endpoints available at http://localhost:${PORT}/api/pokemon`);
-    console.log(`📈 Dashboard API endpoints available at http://localhost:${PORT}/api/dashboard`);
-    console.log(`🏥 Health check available at http://localhost:${PORT}/api/health`);
+    console.log(`Server is running on port ${PORT}`);
+    console.log(`Pokemon API endpoints available at http://localhost:${PORT}/api/pokemon`);
+    console.log(`Dashboard API endpoints available at http://localhost:${PORT}/api/dashboard`);
+    console.log(`Health check available at http://localhost:${PORT}/api/health`);
   });
 };
 

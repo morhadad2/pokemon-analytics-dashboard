@@ -70,43 +70,6 @@ const StyledContainer = styled(Container)`
   padding-left: ${({ theme }) => theme.spacing['3xl']};
 `;
 
-const PollingIndicator = styled.div`
-  position: fixed;
-  top: ${({ theme }) => theme.spacing.lg};
-  right: ${({ theme }) => theme.spacing.lg};
-  background: ${({ theme }) => theme.gradients.pokemonCard};
-  border: 2px solid ${({ theme }) => theme.colors.pokemonDark};
-  border-radius: ${({ theme }) => theme.borderRadius.base};
-  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-  font-family: ${({ theme }) => theme.fonts.primary};
-  color: ${({ theme }) => theme.colors.pokemonDark};
-  z-index: ${({ theme }) => theme.zIndex.overlay};
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-  box-shadow: ${({ theme }) => theme.shadows.sm};
-`;
-
-const PollingStatus = styled.span<{ isActive: boolean }>`
-  color: ${({ isActive, theme }) => 
-    isActive ? theme.colors.success : theme.colors.pokemonRed};
-  font-weight: bold;
-`;
-
-const PollingButton = styled.button`
-  background: none;
-  border: none;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  cursor: pointer;
-  padding: 2px;
-  border-radius: 2px;
-  transition: background-color 0.2s ease;
-  
-  &:hover {
-    background: rgba(0, 0, 0, 0.1);
-  }
-`;
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<NavigationPage>('dashboard');
@@ -122,8 +85,8 @@ function AppContent() {
   const [statsEvolution, setStatsEvolution] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [isPolling, setIsPolling] = useState(true);
+
 
   const fetchPokemonData = async (isInitialLoad = false) => {
     try {
@@ -166,7 +129,6 @@ function AppContent() {
       setPokemonStats(statsData);
       setRarityAnalysis(rarityData);
       setStatsEvolution(statsEvolutionData);
-      setLastUpdated(new Date());
       
       console.log('🔄 Pokemon data updated at:', new Date().toLocaleTimeString());
     } catch (err) {
@@ -194,11 +156,6 @@ function AppContent() {
 
     return () => clearInterval(interval);
   }, [isPolling]);
-
-  const togglePolling = () => {
-    setIsPolling(!isPolling);
-    console.log(isPolling ? '⏸️ Polling stopped' : '▶️ Polling started');
-  };
 
   const handlePageChange = (page: NavigationPage) => {
     setCurrentPage(page);
@@ -250,23 +207,6 @@ function AppContent() {
   return (
     <AppBackground>
       <Navigation currentPage={currentPage} onPageChange={handlePageChange} />
-      
-      <PollingIndicator>
-        <PollingStatus isActive={isPolling}>
-          {isPolling ? '🔄' : '⏸️'}
-        </PollingStatus>
-        <span>
-          {isPolling ? 'Auto-refresh: 10s' : 'Auto-refresh: OFF'}
-        </span>
-        {lastUpdated && (
-          <span>
-            | Last: {lastUpdated.toLocaleTimeString()}
-          </span>
-        )}
-        <PollingButton onClick={togglePolling} title={isPolling ? 'Stop auto-refresh' : 'Start auto-refresh'}>
-          {isPolling ? '⏸️' : '▶️'}
-        </PollingButton>
-      </PollingIndicator>
       
       <PokemonHeader 
         totalPokemon={pokemonStats?.totalPokemon}

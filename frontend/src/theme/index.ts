@@ -9,7 +9,7 @@ export const theme = {
     pokemonDark: '#2c3e50',
     pokemonDarkLight: '#34495e',
     pokemonLight: '#ecf0f1',
-    pokemonLightDark: '#bdc3c7',
+    pokemonLightDark: '##274559',
     
     // Pokemon Accents
     pokemonYellow: '#f39c12',
@@ -88,11 +88,11 @@ export const theme = {
   },
   
   gradients: {
-    pokemonRed: 'linear-gradient(135deg, #e74c3c, #c0392b)',
+    pokemonRed: 'linear-gradient(135deg, #e74c3c,rgb(12, 12, 12))',
     pokemonRedHover: 'linear-gradient(135deg, #c0392b, #a93226)',
     pokemonBlue: 'linear-gradient(135deg, #3498db, #2980b9)',
     pokemonBackground: 'linear-gradient(135deg, #34495e 0%, #2c3e50 100%)',
-    pokemonCard: 'linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%)',
+    pokemonCard: 'linear-gradient(135deg, #ecf0f1 0%,rgb(129, 132, 134) 100%)',
     pokemonHeader: 'linear-gradient(90deg, #e74c3c, #f39c12, #e74c3c)',
     pokemonSuccess: 'linear-gradient(135deg, #27ae60, #229954)',
     pokemonWarning: 'linear-gradient(135deg, #f39c12, #e67e22)',
