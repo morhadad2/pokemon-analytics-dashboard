@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cron from 'node-cron';
 import pokemonRoutes from './routes/pokemon';
+import dashboardRoutes from './routes/dashboard';
 import { PokemonService } from './services/pokemonService';
 
 dotenv.config();
@@ -34,6 +35,7 @@ const connectDB = async () => {
 
 // Routes
 app.use('/api/pokemon', pokemonRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -70,6 +72,7 @@ const startServer = async () => {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     console.log(`Pokemon API endpoints available at http://localhost:${PORT}/api/pokemon`);
+    console.log(`Dashboard API endpoints available at http://localhost:${PORT}/api/dashboard`);
   });
 };
 

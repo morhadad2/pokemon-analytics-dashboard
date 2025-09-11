@@ -9,6 +9,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const node_cron_1 = __importDefault(require("node-cron"));
 const pokemon_1 = __importDefault(require("./routes/pokemon"));
+const dashboard_1 = __importDefault(require("./routes/dashboard"));
 const pokemonService_1 = require("./services/pokemonService");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -35,6 +36,7 @@ const connectDB = async () => {
 };
 // Routes
 app.use('/api/pokemon', pokemon_1.default);
+app.use('/api/dashboard', dashboard_1.default);
 // Health check endpoint
 app.get('/api/health', (req, res) => {
     res.json({ message: 'Server is running!' });
@@ -63,6 +65,7 @@ const startServer = async () => {
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
         console.log(`Pokemon API endpoints available at http://localhost:${PORT}/api/pokemon`);
+        console.log(`Dashboard API endpoints available at http://localhost:${PORT}/api/dashboard`);
     });
 };
 startServer();

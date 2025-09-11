@@ -42,31 +42,31 @@ export const pokemonAPI = {
 
   // Get type distribution
   getTypeDistribution: async (): Promise<Distribution[]> => {
-    const response = await api.get('/pokemon/types');
+    const response = await api.get('/dashboard/types');
     return response.data;
   },
 
   // Get evolution distribution
   getEvolutionDistribution: async (): Promise<Distribution[]> => {
-    const response = await api.get('/pokemon/evolution');
+    const response = await api.get('/dashboard/evolution');
     return response.data;
   },
 
   // Get top Pokemon by stat
   getTopPokemonByStat: async (stat: string): Promise<Pokemon[]> => {
-    const response = await api.get(`/pokemon/top/${stat}`);
+    const response = await api.get(`/dashboard/top/${stat}`);
     return response.data;
   },
 
   // Get rarity analysis
   getRarityAnalysis: async (): Promise<any> => {
-    const response = await api.get('/pokemon/rarity');
+    const response = await api.get('/dashboard/rarity');
     return response.data;
   },
 
   // Get stats evolution over time
   getStatsEvolutionOverTime: async (): Promise<any> => {
-    const response = await api.get('/pokemon/stats-evolution');
+    const response = await api.get('/dashboard/stats-evolution');
     return response.data;
   },
 };
